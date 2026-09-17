@@ -173,5 +173,5 @@ class Tokenizer:
                     new_tokens.append(tokens[position])
                     position+=1
     
-                tokens = new_tokens
+            tokens = new_tokens
         return tokens
