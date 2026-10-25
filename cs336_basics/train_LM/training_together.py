@@ -9,18 +9,18 @@ import numpy as np
 import torch
 import argparse
 import time
-import pathlib
 import csv
 import json
-
-PathOfCheckingPoint = "E:/cs336/assignment1-basics/cs336_basics/checkingpoint/"
-DataPath = "E:/cs336/saves/token_array/tinystories_train_tokens.bin"
-validPath = "E:/cs336/saves/token_array/tinystories_valid_tokens.bin"
-
 from pathlib import Path
 from datetime import datetime
 
-parser = argparse.ArgumentParser(description="TinyStories training")
+data_dir = Path(__file__).resolve().parents[3] / "saves" / "token_array"
+DataPath = str(data_dir / "tinystories_train_tokens.bin")
+validPath = str(data_dir / "tinystories_valid_tokens.bin")
+
+parser = argparse.ArgumentParser(description="Transformer LM training on tokenized data")
+parser.add_argument("--vocab-size", type=int, default=10000,
+                    help="Tokenizer vocabulary size (TinyStories: 10000; OpenWebText: 32000)")
 parser.add_argument("--batch-size", type=int, default=4)
 parser.add_argument("--num-steps", type=int, default=200)
 parser.add_argument("--max-lr", type=float, default=3e-4)
@@ -66,6 +66,8 @@ if args.device == "cuda" and not torch.cuda.is_available():
 
 if args.batch_size <= 0:
     parser.error("--batch-size 必须大于 0")
+if args.vocab_size <= 0:
+    parser.error("--vocab-size 必须大于 0")
 if not 0 <= args.warmup_steps < args.num_steps:
     parser.error("需要满足 0 <= warmup-steps < num-steps")
 if not 0 <= args.min_lr <= args.max_lr:
@@ -80,12 +82,13 @@ if min(
 
 # 每次实验单独保存，避免混合日志或覆盖旧检查点。
 run_dir = (
-    Path(args.run_dir)
+    Path(args.run_dir).expanduser()
     if args.run_dir
-    else Path("E:/cs336/saves/runs")
-    / datetime.now().strftime("tinystories_%Y%m%d_%H%M%S_%f")
-)
+    else Path("runs") / datetime.now().strftime("train_%Y%m%d_%H%M%S_%f")
+).resolve()
 checkpoint_dir = run_dir / "checkpoints"
+args.train_path = str(Path(args.train_path).expanduser().resolve())
+args.valid_path = str(Path(args.valid_path).expanduser().resolve())
 
 np.random.seed(args.seed)
 torch.manual_seed(args.seed)
@@ -99,7 +102,7 @@ batch_size = args.batch_size
 max_lr = args.max_lr
 min_lr = args.min_lr
 
-vocab_size = 10000
+vocab_size = args.vocab_size
 context_length = 256
 num_layers = 4
 d_model = 512
