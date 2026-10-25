@@ -1,0 +1,96 @@
+{
+  "training": {
+    "final_validation_loss": 4.111621332168579,
+    "final_perplexity": 61.04561259256423,
+    "best_validation": {
+      "step": "19600",
+      "elapsed_seconds": "8720.491940442007",
+      "split": "valid",
+      "loss": "4.110878658294678",
+      "lr": "3.0273158909362885e-05"
+    },
+    "last_100_train_log_losses_mean": 4.129183354377747,
+    "seconds": 8897.81922581885,
+    "tokens_processed": 327680000
+  },
+  "tokenizer": {
+    "vocabulary_size": 32000,
+    "max_id": 31999,
+    "eos_id": [
+      256
+    ],
+    "merges_in_file": 31743,
+    "merges_loaded": 31738,
+    "hash_prefixed_lines_skipped": [
+      "# #",
+      "## ##",
+      "#### ####",
+      "######## ########",
+      "## #"
+    ],
+    "train_prefix_check": {
+      "checked_tokens": 580,
+      "matches_existing_bin": true,
+      "dataset_tokens": 2727241853
+    },
+    "valid_prefix_check": {
+      "checked_tokens": 2986,
+      "matches_existing_bin": true,
+      "dataset_tokens": 66402215
+    }
+  },
+  "checkpoint": {
+    "iteration": 20000,
+    "parameters": 45224448,
+    "all_weights_finite": true,
+    "optimizer_next_steps": [
+      20001
+    ],
+    "device": "cuda"
+  },
+  "recomputed_train_loss": {
+    "mean": 4.115695878863335,
+    "batch_std": 0.17544975300886242,
+    "tokens": 32768
+  },
+  "recomputed_valid_loss": {
+    "mean": 4.131719619035721,
+    "batch_std": 0.15773612289991304,
+    "tokens": 32768
+  },
+  "causal_prefix_max_difference": 0.0,
+  "generations": [
+    {
+      "prompt": "Artificial intelligence is",
+      "temperature": 0.8,
+      "top_p": 0.9,
+      "seed": 42,
+      "prompt_token_count": 4,
+      "text": "Artificial intelligence is a very strong case. There are still concerns about the problem with regard to our own history, not only on the part of the material, but on the other side of the continuum, it’s important to understand that it’s a challenge to the idea of the domain.\n\nWhat does that mean?\n\nThe only one thing that is in use is that the logical order is a way of identifying a domain which is the domain of such a system. Therefore, a method to remove a domain name is called a domain name, but it’s not clear if it’s “doing something” or “unless”."
+    },
+    {
+      "prompt": "Artificial intelligence is",
+      "temperature": 0.6,
+      "top_p": 0.9,
+      "seed": 42,
+      "prompt_token_count": 4,
+      "text": "Artificial intelligence is a very strong case.\n\nHe said: \"The FEC is going to have to have the same thing, because it's a big part of that.\"\n\nHe said: \"It's not a big part of the way that it's going to be a big part of the problem.\n\n\"It's a very strong case. I think it's a very big part of what the NFCC was doing.\n\n\"There's a lot of interest in the NFCC and the NFCC, and I think it's a good place to go, and it's a good place to go.\""
+    },
+    {
+      "prompt": "The government announced",
+      "temperature": 0.8,
+      "top_p": 0.9,
+      "seed": 42,
+      "prompt_token_count": 3,
+      "text": "The government announced the government has not been released yet.\n\nThe government will provide 1,000 workers to 3,000 workers and other workers.\n\n\"If you take all the legal action and attempt to put them there, you have to get the funds to work,\" the government said.\n\nThis will bring the government to the table at about 3,000 workers.\n\nThe government said the government is entitled to pay a wage to workers and workers and for the workers, she said.\n\n\"It's also very important to take the initiative to be reformed. The government should be very careful to ensure that everyone is satisfied"
+    },
+    {
+      "prompt": "请解释什么是人工智能。",
+      "temperature": 0.8,
+      "top_p": 0.9,
+      "seed": 42,
+      "prompt_token_count": 29,
+      "text": "请解释什么是人工智能。\n\nA shamanic dragon and coaecake while walking a hillside at the base. The dragon, her custom, is as enamel as her crotch, her chest, and the pearl of a dye. Herr his sword and her sword, however, will be of the same size as her sword. Herr herr amaecake, then, has been saved from the ground.\n\nHerr myr myr dweets at the tail, the dragon begins to stop me.\n\nHerr noir dweets the dragon that fought to the stone wall. The"
+    }
+  ]
+}

@@ -1,0 +1,119 @@
+import csv
+import gc
+import itertools
+import json
+import math
+import sys
+from pathlib import Path
+
+import numpy as np
+import torch
+
+ROOT = Path('E:/cs336')
+sys.path.insert(0, str(ROOT / 'assignment1-basics'))
+from cs336_basics.tokenizer import Tokenizer
+from cs336_basics.transformer_LM.transformer_lm import transformer_LM
+from cs336_basics.train_LM.cross_entropy import cross_entropy
+from cs336_basics.train_LM.decoding import decoding
+
+torch.set_num_threads(2)
+run = ROOT / 'saves/runs/owt_full_20260919_010610'
+config = json.loads((run / 'config.json').read_text(encoding='utf-8'))
+out = ROOT / 'output/owt_model_audit'
+out.mkdir(exist_ok=True)
+result = {}
+with (run / 'metrics.csv').open() as stream:
+    rows = list(csv.DictReader(stream))
+valid = [r for r in rows if r['split'] == 'valid']
+train = [r for r in rows if r['split'] == 'train']
+result['training'] = {
+    'final_validation_loss': float(valid[-1]['loss']),
+    'final_perplexity': math.exp(float(valid[-1]['loss'])),
+    'best_validation': min(valid, key=lambda r: float(r['loss'])),
+    'last_100_train_log_losses_mean': float(np.mean([float(r['loss']) for r in train[-100:]])),
+    'seconds': float(valid[-1]['elapsed_seconds']),
+    'tokens_processed': config['num_steps'] * config['batch_size'] * config['context_length'],
+}
+vocab_path = ROOT / 'saves/openwebtext_dataset/openwebtext_vocab.json'
+merges_path = ROOT / 'saves/openwebtext_dataset/openwebtext_merges.txt'
+tokenizer = Tokenizer.from_files(vocab_path, merges_path, ['<|endoftext|>'])
+merge_lines = merges_path.read_text(encoding='utf-8').splitlines()
+result['tokenizer'] = {
+    'vocabulary_size': len(tokenizer.vocab),
+    'max_id': max(tokenizer.vocab),
+    'eos_id': tokenizer.encode('<|endoftext|>'),
+    'merges_in_file': len(merge_lines),
+    'merges_loaded': len(tokenizer.merges),
+    'hash_prefixed_lines_skipped': [r for r in merge_lines if r.startswith('#')],
+}
+arrays = {}
+for split in ['train', 'valid']:
+    arr = np.memmap(ROOT / f'saves/token_array/openwebtext_{split}_tokens.bin', dtype=np.uint16, mode='r')
+    arrays[split] = arr
+    with (ROOT / f'data/owt_{split}.txt').open(encoding='utf-8') as stream:
+        text_lines = list(itertools.islice(stream, 32))
+    encoded = list(tokenizer.encode_iterable(text_lines))
+    result['tokenizer'][f'{split}_prefix_check'] = {
+        'checked_tokens': len(encoded),
+        'matches_existing_bin': bool(np.array_equal(encoded, arr[:len(encoded)])),
+        'decoded_preview': tokenizer.decode(arr[:100].tolist()),
+        'dataset_tokens': len(arr),
+    }
+
+device = 'cuda' if torch.cuda.is_available() else 'cpu'
+checkpoint = torch.load(run / 'checkpoints/step_20000.pt', map_location='cpu', weights_only=True)
+model = transformer_LM(**{k: config[k] for k in ['vocab_size', 'context_length', 'num_layers', 'd_model', 'num_heads', 'd_ff', 'theta']})
+model.load_state_dict(checkpoint['model'])
+result['checkpoint'] = {
+    'iteration': checkpoint['iteration'],
+    'parameters': sum(p.numel() for p in model.parameters()),
+    'all_weights_finite': all(bool(torch.isfinite(p).all()) for p in model.parameters()),
+    'optimizer_next_steps': sorted(set(s['t'] for s in checkpoint['optimizer']['state'].values())),
+    'device': device,
+}
+del checkpoint
+gc.collect()
+model.to(device).eval()
+print('Checkpoint and tokenizer checks:', json.dumps(result, ensure_ascii=False), flush=True)
+rng = np.random.default_rng(20260919)
+with torch.inference_mode():
+    for split, arr in arrays.items():
+        losses = []
+        for _ in range(16):
+            starts = rng.integers(0, len(arr) - 256, size=8)
+            x = torch.tensor(np.stack([arr[s:s+256] for s in starts]), dtype=torch.long, device=device)
+            y = torch.tensor(np.stack([arr[s+1:s+257] for s in starts]), dtype=torch.long, device=device)
+            losses.append(float(cross_entropy(model(x), y)))
+        result[f'recomputed_{split}_loss'] = {'mean': float(np.mean(losses)), 'batch_std': float(np.std(losses)), 'tokens': 32768}
+        print(split, result[f'recomputed_{split}_loss'], flush=True)
+    original = torch.tensor([tokenizer.encode('The government announced a new policy today.')], dtype=torch.long, device=device)
+    changed = original.clone()
+    changed[0, -1] = (int(changed[0, -1]) + 1) % config['vocab_size']
+    result['causal_prefix_max_difference'] = float((model(original)[:, :-1] - model(changed)[:, :-1]).abs().max())
+
+result['generations'] = []
+for prompt, temperature in [
+    ('Artificial intelligence is', 0.8),
+    ('Artificial intelligence is', 0.6),
+    ('The government announced', 0.8),
+    ('请解释什么是人工智能。', 0.8),
+]:
+    torch.manual_seed(42)
+    generated = decoding(prompt, model, tokenizer, temperature, 0.9, 128, device)
+    item = {'prompt': prompt, 'temperature': temperature, 'top_p': 0.9, 'seed': 42, 'prompt_token_count': len(tokenizer.encode(prompt)), 'text': generated}
+    result['generations'].append(item)
+    print('GENERATION', json.dumps(item, ensure_ascii=False), flush=True)
+
+(out / 'audit.json').write_text(json.dumps(result, ensure_ascii=False, indent=2), encoding='utf-8')
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
+fig, ax = plt.subplots(figsize=(9, 4.5), constrained_layout=True)
+ax.plot([int(r['step']) for r in train], [float(r['loss']) for r in train], color='#b2c4d8', alpha=.55, linewidth=.7, label='Training batch loss')
+ax.plot([int(r['step']) for r in valid], [float(r['loss']) for r in valid], color='#174d79', linewidth=2, label='Validation loss')
+ax.set(xlabel='Training step', ylabel='Cross-entropy loss', title='OpenWebText: 4-layer Transformer, 327.68M training tokens')
+ax.legend()
+ax.grid(alpha=.18)
+fig.savefig(out / 'loss_curve.png', dpi=160)
+plt.close(fig)
+print('Saved audit to', out, flush=True)

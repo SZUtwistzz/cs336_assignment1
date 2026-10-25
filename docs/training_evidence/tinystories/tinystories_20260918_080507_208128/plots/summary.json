@@ -1,0 +1,21 @@
+{
+  "source_run": "E:\\cs336\\saves\\runs\\tinystories_20260918_080507_208128",
+  "records": 2100,
+  "final_step": 20000,
+  "logged_runtime_hours": 16.167775705972222,
+  "final_validation": {
+    "step": 20000,
+    "split": "valid",
+    "elapsed_seconds": 58203.9925415,
+    "loss": 1.442178303003311,
+    "lr": 3.0000001699312058e-05
+  },
+  "best_validation": {
+    "step": 19200,
+    "split": "valid",
+    "elapsed_seconds": 55740.818486899996,
+    "loss": 1.4342574894428253,
+    "lr": 3.1088813557486676e-05
+  },
+  "time_note": "Sum of logged session durations; excludes offline gaps and unlogged save/startup time."
+}

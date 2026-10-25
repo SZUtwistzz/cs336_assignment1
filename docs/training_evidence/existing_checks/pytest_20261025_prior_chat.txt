@@ -1,0 +1,21 @@
+Source: terminal tool output already present in this chat before the training-evidence request.
+Prior task: upload the latest local CS336 Assignment 1 code to GitHub.
+Recorded date: 2026-10-25; no independent test-start timestamp was captured in this excerpt.
+Collection note: this is a transcript excerpt, not an original on-disk pytest log. No tests were rerun for this evidence task.
+Scope: six selected tests only; not the entire course test suite and not proof about the historical training code version.
+The prior task later committed the inspected files as 6113a6c9ffcb78bf07b04c1e017b77eb7d60fb80; the tests themselves did not print a Git commit.
+
+Previously executed command (PowerShell; retained for provenance, not executed here):
+$env:PYTHONUTF8='1'; $env:OMP_NUM_THREADS='2'; $env:MKL_NUM_THREADS='2'; & '.\.venv-win-clean\Scripts\python.exe' -m pytest tests/test_training_server.py tests/test_training_resume.py tests/test_serialization.py tests/test_plot_training.py -q -o addopts= --basetemp 'E:\cs336\output\github-upload-check-20261025-01' -p no:cacheprovider
+Working directory: E:\cs336\assignment1-basics
+
+Relevant prior terminal output, combined across the original tool's incremental output chunks:
+tests/test_training_server.py::test_owt_vocab_training_and_resume_from_another_directory PASSED [ 16%]
+tests/test_training_resume.py::test_resume_continues_step_schedule_and_optimizer PASSED [ 33%]
+tests/test_serialization.py::test_checkpointing PASSED                   [ 50%]
+tests/test_plot_training.py::test_resume_discards_old_future_and_adds_time PASSED [ 66%]
+tests/test_plot_training.py::test_missing_checkpoint_time_is_not_silently_invented PASSED [ 83%]
+tests/test_plot_training.py::test_resume_cycle_is_rejected PASSED        [100%]
+
+============================= 6 passed in 41.74s ==============================
+Prior terminal tool exit code: 0

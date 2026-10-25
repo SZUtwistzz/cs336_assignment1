@@ -1,0 +1,340 @@
+{
+  "prepared_date": "2026-10-25",
+  "collection_method": "Read existing files only; no training, generation, checkpoint loading or tests executed.",
+  "numeric_policy": "Raw CSV numeric strings retained; calculations use decimal arithmetic. Row locations count the header as line 1.",
+  "code_snapshot_inspected": "6113a6c9ffcb78bf07b04c1e017b77eb7d60fb80",
+  "training_version_confirmed": false,
+  "runs": [
+    {
+      "dataset": "tinystories",
+      "run": "tinystories_20260917_092722_139462",
+      "role": "formal run, before resume",
+      "config_file": "tinystories/tinystories_20260917_092722_139462/config.json",
+      "metrics_file": "tinystories/tinystories_20260917_092722_139462/metrics.csv",
+      "rows": 1575,
+      "train_rows": 1500,
+      "validation_rows": 75,
+      "first_train": {
+        "step": "10",
+        "elapsed_seconds": "32.0458392999999",
+        "split": "train",
+        "loss": "9.197282791137695",
+        "lr": "1.3499999999999998e-05",
+        "csv_line": 2
+      },
+      "last_train": {
+        "step": "15000",
+        "elapsed_seconds": "44883.0269258",
+        "split": "train",
+        "loss": "1.4133309125900269",
+        "lr": "7.031615722506e-05",
+        "csv_line": 1575
+      },
+      "first_validation": {
+        "step": "200",
+        "elapsed_seconds": "1317.3197214",
+        "split": "valid",
+        "loss": "3.478432035446167",
+        "lr": "0.0002985",
+        "csv_line": 22
+      },
+      "last_validation": {
+        "step": "15000",
+        "elapsed_seconds": "44890.9692975",
+        "split": "valid",
+        "loss": "1.4822289884090423",
+        "lr": "7.031615722506e-05",
+        "csv_line": 1576
+      },
+      "best_validation": {
+        "step": "14800",
+        "elapsed_seconds": "44374.0822789",
+        "split": "valid",
+        "loss": "1.4587804675102234",
+        "lr": "7.341696551032473e-05",
+        "csv_line": 1555
+      },
+      "repeated_split_step": [],
+      "elapsed_time_decreases_at_csv_lines": [],
+      "missing_expected_logged_steps_within_observed_range": [],
+      "configured_num_steps": 20000,
+      "actual_training_git_commit": null
+    },
+    {
+      "dataset": "tinystories",
+      "run": "tinystories_20260918_080507_208128",
+      "role": "formal run, resumed from step 15000",
+      "config_file": "tinystories/tinystories_20260918_080507_208128/config.json",
+      "metrics_file": "tinystories/tinystories_20260918_080507_208128/metrics.csv",
+      "rows": 525,
+      "train_rows": 500,
+      "validation_rows": 25,
+      "first_train": {
+        "step": "15010",
+        "elapsed_seconds": "236.2918626999999",
+        "split": "train",
+        "loss": "1.4788191318511963",
+        "lr": "7.016359389925397e-05",
+        "csv_line": 2
+      },
+      "last_train": {
+        "step": "20000",
+        "elapsed_seconds": "13302.9107782",
+        "split": "train",
+        "loss": "1.4235165119171143",
+        "lr": "3.0000001699312058e-05",
+        "csv_line": 525
+      },
+      "first_validation": {
+        "step": "15200",
+        "elapsed_seconds": "943.8275102999996",
+        "split": "valid",
+        "loss": "1.4773261666297912",
+        "lr": "6.731068754346394e-05",
+        "csv_line": 22
+      },
+      "last_validation": {
+        "step": "20000",
+        "elapsed_seconds": "13313.023244",
+        "split": "valid",
+        "loss": "1.442178303003311",
+        "lr": "3.0000001699312058e-05",
+        "csv_line": 526
+      },
+      "best_validation": {
+        "step": "19200",
+        "elapsed_seconds": "10849.8491894",
+        "split": "valid",
+        "loss": "1.4342574894428253",
+        "lr": "3.1088813557486676e-05",
+        "csv_line": 442
+      },
+      "repeated_split_step": [],
+      "elapsed_time_decreases_at_csv_lines": [],
+      "missing_expected_logged_steps_within_observed_range": [],
+      "configured_num_steps": 20000,
+      "actual_training_git_commit": null
+    },
+    {
+      "dataset": "openwebtext",
+      "run": "owt_full_20260919_010610",
+      "role": "formal run",
+      "config_file": "openwebtext/owt_full_20260919_010610/config.json",
+      "metrics_file": "openwebtext/owt_full_20260919_010610/metrics.csv",
+      "rows": 2100,
+      "train_rows": 2000,
+      "validation_rows": 100,
+      "first_train": {
+        "step": "10",
+        "elapsed_seconds": "5.615310618886724",
+        "split": "train",
+        "loss": "10.359819412231445",
+        "lr": "1.3499999999999998e-05",
+        "csv_line": 2
+      },
+      "last_train": {
+        "step": "20000",
+        "elapsed_seconds": "8895.30067398888",
+        "split": "train",
+        "loss": "4.09528923034668",
+        "lr": "3.0000001699312058e-05",
+        "csv_line": 2100
+      },
+      "first_validation": {
+        "step": "200",
+        "elapsed_seconds": "95.2464406748768",
+        "split": "valid",
+        "loss": "6.691180348396301",
+        "lr": "0.0002985",
+        "csv_line": 22
+      },
+      "last_validation": {
+        "step": "20000",
+        "elapsed_seconds": "8897.81922581885",
+        "split": "valid",
+        "loss": "4.111621332168579",
+        "lr": "3.0000001699312058e-05",
+        "csv_line": 2101
+      },
+      "best_validation": {
+        "step": "19600",
+        "elapsed_seconds": "8720.491940442007",
+        "split": "valid",
+        "loss": "4.110878658294678",
+        "lr": "3.0273158909362885e-05",
+        "csv_line": 2059
+      },
+      "repeated_split_step": [],
+      "elapsed_time_decreases_at_csv_lines": [],
+      "missing_expected_logged_steps_within_observed_range": [],
+      "configured_num_steps": 20000,
+      "actual_training_git_commit": null
+    },
+    {
+      "dataset": "tinystories",
+      "run": "tinystories_20260916_235145_359599",
+      "role": "separate incomplete run, not part of the resumed chain",
+      "config_file": "tinystories/tinystories_20260916_235145_359599/config.json",
+      "metrics_file": "tinystories/tinystories_20260916_235145_359599/metrics.csv",
+      "rows": 19,
+      "train_rows": 19,
+      "validation_rows": 0,
+      "first_train": {
+        "step": "10",
+        "elapsed_seconds": "32.68360599999869",
+        "split": "train",
+        "loss": "9.197282791137695",
+        "lr": "1.3499999999999998e-05",
+        "csv_line": 2
+      },
+      "last_train": {
+        "step": "190",
+        "elapsed_seconds": "485.34505750000244",
+        "split": "train",
+        "loss": "3.6864027976989746",
+        "lr": "0.00028349999999999995",
+        "csv_line": 20
+      },
+      "first_validation": null,
+      "last_validation": null,
+      "best_validation": null,
+      "repeated_split_step": [],
+      "elapsed_time_decreases_at_csv_lines": [],
+      "missing_expected_logged_steps_within_observed_range": [],
+      "configured_num_steps": 20000,
+      "actual_training_git_commit": null
+    },
+    {
+      "dataset": "existing_checks",
+      "run": "integration_20260916_01",
+      "role": "existing two-step CPU integration record",
+      "config_file": "existing_checks/integration_20260916_01/config.json",
+      "metrics_file": "existing_checks/integration_20260916_01/metrics.csv",
+      "rows": 4,
+      "train_rows": 2,
+      "validation_rows": 2,
+      "first_train": {
+        "step": "1",
+        "elapsed_seconds": "0.19658480000362033",
+        "split": "train",
+        "loss": "9.27402114868164",
+        "lr": "0.0003",
+        "csv_line": 2
+      },
+      "last_train": {
+        "step": "2",
+        "elapsed_seconds": "0.40126550000422867",
+        "split": "train",
+        "loss": "9.141458511352539",
+        "lr": "0.00016499999999999997",
+        "csv_line": 4
+      },
+      "first_validation": {
+        "step": "1",
+        "elapsed_seconds": "0.23185300000477582",
+        "split": "valid",
+        "loss": "9.072651863098145",
+        "lr": "0.0003",
+        "csv_line": 3
+      },
+      "last_validation": {
+        "step": "2",
+        "elapsed_seconds": "0.4346739000029629",
+        "split": "valid",
+        "loss": "8.967222213745117",
+        "lr": "0.00016499999999999997",
+        "csv_line": 5
+      },
+      "best_validation": {
+        "step": "2",
+        "elapsed_seconds": "0.4346739000029629",
+        "split": "valid",
+        "loss": "8.967222213745117",
+        "lr": "0.00016499999999999997",
+        "csv_line": 5
+      },
+      "repeated_split_step": [],
+      "elapsed_time_decreases_at_csv_lines": [],
+      "missing_expected_logged_steps_within_observed_range": [],
+      "configured_num_steps": 2,
+      "actual_training_git_commit": null
+    },
+    {
+      "dataset": "existing_checks",
+      "run": "gpu_integration_20260916_01",
+      "role": "existing two-step CUDA integration record",
+      "config_file": "existing_checks/gpu_integration_20260916_01/config.json",
+      "metrics_file": "existing_checks/gpu_integration_20260916_01/metrics.csv",
+      "rows": 4,
+      "train_rows": 2,
+      "validation_rows": 2,
+      "first_train": {
+        "step": "1",
+        "elapsed_seconds": "0.5086264999990817",
+        "split": "train",
+        "loss": "9.25723934173584",
+        "lr": "0.0003",
+        "csv_line": 2
+      },
+      "last_train": {
+        "step": "2",
+        "elapsed_seconds": "0.5616064999994705",
+        "split": "train",
+        "loss": "9.004534721374512",
+        "lr": "0.00016499999999999997",
+        "csv_line": 4
+      },
+      "first_validation": {
+        "step": "1",
+        "elapsed_seconds": "0.5189575999975204",
+        "split": "valid",
+        "loss": "9.021612167358398",
+        "lr": "0.0003",
+        "csv_line": 3
+      },
+      "last_validation": {
+        "step": "2",
+        "elapsed_seconds": "0.5715750999952434",
+        "split": "valid",
+        "loss": "8.870348930358887",
+        "lr": "0.00016499999999999997",
+        "csv_line": 5
+      },
+      "best_validation": {
+        "step": "2",
+        "elapsed_seconds": "0.5715750999952434",
+        "split": "valid",
+        "loss": "8.870348930358887",
+        "lr": "0.00016499999999999997",
+        "csv_line": 5
+      },
+      "repeated_split_step": [],
+      "elapsed_time_decreases_at_csv_lines": [],
+      "missing_expected_logged_steps_within_observed_range": [],
+      "configured_num_steps": 2,
+      "actual_training_git_commit": null
+    }
+  ],
+  "tinystories_resume": {
+    "source_run": "tinystories_20260917_092722_139462",
+    "resumed_run": "tinystories_20260918_080507_208128",
+    "checkpoint_step": 15000,
+    "evidence": "resumed config.json: resume and start_step",
+    "combined_rows": 2100,
+    "logged_seconds_sum_exact": "58203.9925415",
+    "formula": "44890.9692975 + 13313.023244",
+    "nominal_training_token_positions": "327680000",
+    "token_formula": "(15000 + (20000 - 15000)) * 64 * 256; sampled positions, not unique corpus tokens",
+    "duplicate_train_steps_between_segments": [],
+    "duplicate_valid_steps_between_segments": [],
+    "missing_expected_steps_between_segments": []
+  },
+  "openwebtext": {
+    "logged_seconds_exact": "8897.81922581885",
+    "nominal_training_token_positions": "327680000",
+    "token_formula": "20000 * 64 * 256",
+    "audit_record_parameter_count": 45224448,
+    "audit_record_parameter_count_rechecked": false,
+    "training_host": "unknown; locally stored original configuration contains Linux paths"
+  }
+}
